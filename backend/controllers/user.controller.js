@@ -125,6 +125,8 @@ console.log("Generated Data URI:", fileUri);
 const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
     resource_type: "auto", // Auto-detect file type
     folder: "uploads",
+    access_mode: "public",  // Make sure the file is public
+
 });
 console.log("Cloudinary response:", cloudResponse);
 
