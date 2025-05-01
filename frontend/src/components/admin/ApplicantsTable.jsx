@@ -14,20 +14,25 @@ const shortlistingStatus = ["Accepted", "Rejected"];
 const ApplicantsTable = () => {
     const { applicants } = useSelector(store => store.application);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [resumeCategory, setResumeCategory] = useState('');
+    const [resumeAnalysis, setResumeAnalysis] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-    // resumeUrl will be used when the actual API integration is implemented
     const analyzeResume = async (resumeUrl) => {
         try {
+            setLoading(true);
             setIsModalOpen(true);
-
-            // Here you would make an API call to your resume categorization service
-            // For now, we'll simulate a response
-            setResumeCategory('Software Development');
-            // const response = await axios.post(`${APPLICATION_API_END_POINT}/analyze-resume`, { resumeUrl });
-            // setResumeCategory(response.data.category);
+            
+            const response = await axios.post('http://localhost:5000/analyze-resume', {
+                resume_url: resumeUrl
+            });
+            
+            setResumeAnalysis(response.data);
+            toast.success('Resume analyzed successfully');
         } catch (error) {
+            console.error('Error analyzing resume:', error);
             toast.error('Failed to analyze resume');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -75,8 +80,9 @@ const ApplicantsTable = () => {
                                                     variant="outline"
                                                     size="sm"
                                                     onClick={() => analyzeResume(item?.applicant?.profile?.resume)}
+                                                    disabled={loading}
                                                 >
-                                                    Resume Summary
+                                                    {loading ? 'Analyzing...' : 'Resume Summary'}
                                                 </Button>
                                             </>
                                         ) : <span>NA</span>
@@ -100,15 +106,11 @@ const ApplicantsTable = () => {
                                             }
                                         </PopoverContent>
                                     </Popover>
-
                                 </TableCell>
-
                             </tr>
                         ))
                     }
-
                 </TableBody>
-
             </Table>
 
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
@@ -117,8 +119,26 @@ const ApplicantsTable = () => {
                         <DialogTitle>Resume Analysis</DialogTitle>
                     </DialogHeader>
                     <div className="py-4">
-                        <h3 className="font-semibold mb-2">Category:</h3>
-                        <p>{resumeCategory || 'Analyzing...'}</p>
+                        {loading ? (
+                            <p>Analyzing resume...</p>
+                        ) : resumeAnalysis ? (
+                            <div className="space-y-4">
+                                <div>
+                                    <h3 className="font-semibold mb-1">Category:</h3>
+                                    <p>{resumeAnalysis.category}</p>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold mb-1">Confidence Score:</h3>
+                                    <p>{resumeAnalysis.confidence_score}%</p>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold mb-1">Key Skills:</h3>
+                                    <p>{resumeAnalysis.key_skills?.join(', ')}</p>
+                                </div>
+                            </div>
+                        ) : (
+                            <p>No analysis available</p>
+                        )}
                     </div>
                 </DialogContent>
             </Dialog>
