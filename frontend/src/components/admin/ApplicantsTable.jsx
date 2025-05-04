@@ -3,7 +3,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, FileText } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import { APPLICATION_API_END_POINT } from '@/utils/constant';
@@ -16,14 +16,21 @@ const ApplicantsTable = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [resumeAnalysis, setResumeAnalysis] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [selectedResume, setSelectedResume] = useState(null);
 
     const analyzeResume = async (resumeUrl) => {
         try {
             setLoading(true);
+            setSelectedResume(resumeUrl);
             setIsModalOpen(true);
             
-            const response = await axios.post('http://localhost:5000/analyze-resume', {
-                resume_url: resumeUrl
+            const formData = new FormData();
+            formData.append('resume_url', resumeUrl);
+
+            const response = await axios.post('http://localhost:5000/pred', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
             });
             
             setResumeAnalysis(response.data);
@@ -82,7 +89,8 @@ const ApplicantsTable = () => {
                                                     onClick={() => analyzeResume(item?.applicant?.profile?.resume)}
                                                     disabled={loading}
                                                 >
-                                                    {loading ? 'Analyzing...' : 'Resume Summary'}
+                                                    <FileText className="mr-2 h-4 w-4" />
+                                                    {loading && selectedResume === item?.applicant?.profile?.resume ? 'Analyzing...' : 'Analyze Resume'}
                                                 </Button>
                                             </>
                                         ) : <span>NA</span>
@@ -114,26 +122,63 @@ const ApplicantsTable = () => {
             </Table>
 
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                <DialogContent>
+                <DialogContent className="max-w-2xl">
                     <DialogHeader>
                         <DialogTitle>Resume Analysis</DialogTitle>
                     </DialogHeader>
                     <div className="py-4">
                         {loading ? (
-                            <p>Analyzing resume...</p>
+                            <div className="flex items-center justify-center">
+                                <p>Analyzing resume...</p>
+                            </div>
                         ) : resumeAnalysis ? (
-                            <div className="space-y-4">
-                                <div>
-                                    <h3 className="font-semibold mb-1">Category:</h3>
-                                    <p>{resumeAnalysis.category}</p>
+                            <div className="space-y-6">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <h3 className="font-semibold mb-2">Predicted Category:</h3>
+                                        <p className="bg-gray-100 p-2 rounded">{resumeAnalysis.predicted_category}</p>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold mb-2">Recommended Job:</h3>
+                                        <p className="bg-gray-100 p-2 rounded">{resumeAnalysis.recommended_job}</p>
+                                    </div>
                                 </div>
+                                
                                 <div>
-                                    <h3 className="font-semibold mb-1">Confidence Score:</h3>
-                                    <p>{resumeAnalysis.confidence_score}%</p>
+                                    <h3 className="font-semibold mb-2">Extracted Information:</h3>
+                                    <div className="bg-gray-50 p-4 rounded-lg space-y-3">
+                                        {resumeAnalysis.phone && (
+                                            <p><span className="font-medium">Phone:</span> {resumeAnalysis.phone}</p>
+                                        )}
+                                        {resumeAnalysis.email && (
+                                            <p><span className="font-medium">Email:</span> {resumeAnalysis.email}</p>
+                                        )}
+                                        {resumeAnalysis.name && (
+                                            <p><span className="font-medium">Name:</span> {resumeAnalysis.name}</p>
+                                        )}
+                                    </div>
                                 </div>
+
                                 <div>
-                                    <h3 className="font-semibold mb-1">Key Skills:</h3>
-                                    <p>{resumeAnalysis.key_skills?.join(', ')}</p>
+                                    <h3 className="font-semibold mb-2">Skills:</h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {resumeAnalysis.skills?.map((skill, index) => (
+                                            <span key={index} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 className="font-semibold mb-2">Education:</h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {resumeAnalysis.education?.map((edu, index) => (
+                                            <span key={index} className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+                                                {edu}
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         ) : (
