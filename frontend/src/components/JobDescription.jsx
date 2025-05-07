@@ -13,6 +13,8 @@ const JobDescription = () => {
     const {user} = useSelector(store=>store.auth);
     const isIntiallyApplied = singleJob?.applications?.some(application => application.applicant === user?._id) || false;
     const [isApplied, setIsApplied] = useState(isIntiallyApplied);
+    const [summary, setSummary] = useState('');
+    const [isSummarizing, setIsSummarizing] = useState(false);
 
     const params = useParams();
     const jobId = params.id;
@@ -23,11 +25,10 @@ const JobDescription = () => {
             const res = await axios.get(`${APPLICATION_API_END_POINT}/apply/${jobId}`, {withCredentials:true});
             
             if(res.data.success){
-                setIsApplied(true); // Update the local state
+                setIsApplied(true);
                 const updatedSingleJob = {...singleJob, applications:[...singleJob.applications,{applicant:user?._id}]}
-                dispatch(setSingleJob(updatedSingleJob)); // helps us to real time UI update
+                dispatch(setSingleJob(updatedSingleJob));
                 toast.success(res.data.message);
-
             }
         } catch (error) {
             console.log(error);
@@ -35,13 +36,72 @@ const JobDescription = () => {
         }
     }
 
+    const summarizeText = (text) => {
+        // Split text into sentences
+        const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
+        
+        // Calculate word frequency
+        const wordFreq = {};
+        const words = text.toLowerCase().split(/\W+/);
+        words.forEach(word => {
+            if (word.length > 3) { // Ignore short words
+                wordFreq[word] = (wordFreq[word] || 0) + 1;
+            }
+        });
+
+        // Score sentences based on word frequency and position
+        const sentenceScores = sentences.map((sentence, index) => {
+            const sentenceWords = sentence.toLowerCase().split(/\W+/);
+            let score = 0;
+            sentenceWords.forEach(word => {
+                if (wordFreq[word]) {
+                    score += wordFreq[word];
+                }
+            });
+            // Give higher weight to sentences at the beginning
+            const positionWeight = 1 - (index / sentences.length);
+            return { 
+                sentence, 
+                score: (score / sentenceWords.length) * (1 + positionWeight) 
+            };
+        });
+
+        // Sort sentences by score and take top 3
+        const topSentences = sentenceScores
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 3)
+            .map(item => item.sentence.trim());
+
+        // Join sentences and return summary
+        return topSentences.join('. ') + '.';
+    };
+
+    const handleSummarize = () => {
+        if (!singleJob?.description) {
+            toast.error('No job description available to summarize');
+            return;
+        }
+
+        setIsSummarizing(true);
+        try {
+            const summary = summarizeText(singleJob.description);
+            setSummary(summary);
+            toast.success('Description summarized successfully!');
+        } catch (error) {
+            console.error('Error summarizing:', error);
+            toast.error('Failed to summarize description');
+        } finally {
+            setIsSummarizing(false);
+        }
+    };
+
     useEffect(()=>{
         const fetchSingleJob = async () => {
             try {
                 const res = await axios.get(`${JOB_API_END_POINT}/get/${jobId}`,{withCredentials:true});
                 if(res.data.success){
                     dispatch(setSingleJob(res.data.job));
-                    setIsApplied(res.data.job.applications.some(application=>application.applicant === user?._id)) // Ensure the state is in sync with fetched data
+                    setIsApplied(res.data.job.applications.some(application=>application.applicant === user?._id))
                 }
             } catch (error) {
                 console.log(error);
@@ -77,6 +137,24 @@ const JobDescription = () => {
                 <h1 className='font-bold my-1'>Salary: <span className='pl-4 font-normal text-gray-800'>{singleJob?.salary}LPA</span></h1>
                 <h1 className='font-bold my-1'>Total Applicants: <span className='pl-4 font-normal text-gray-800'>{singleJob?.applications?.length}</span></h1>
                 <h1 className='font-bold my-1'>Posted Date: <span className='pl-4 font-normal text-gray-800'>{singleJob?.createdAt.split("T")[0]}</span></h1>
+            </div>
+
+            {/* Summarizer Section */}
+            <div className='mt-6'>
+                <Button
+                    onClick={handleSummarize}
+                    disabled={isSummarizing || !singleJob?.description}
+                    className={`rounded-lg ${isSummarizing ? 'bg-gray-600' : 'bg-[#7209b7] hover:bg-[#5f32ad]'}`}
+                >
+                    {isSummarizing ? 'Summarizing...' : 'Summarize Description'}
+                </Button>
+
+                {summary && (
+                    <div className='mt-4 p-4 bg-gray-50 rounded-lg'>
+                        <h2 className='font-bold mb-2'>Summary:</h2>
+                        <p className='text-gray-800'>{summary}</p>
+                    </div>
+                )}
             </div>
         </div>
     )

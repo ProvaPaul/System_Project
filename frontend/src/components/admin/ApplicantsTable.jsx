@@ -23,7 +23,7 @@ const ApplicantsTable = () => {
             setLoading(true);
             setSelectedResume(resumeUrl);
             setIsModalOpen(true);
-            
+
             const formData = new FormData();
             formData.append('resume_url', resumeUrl);
 
