@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import Navbar from './shared/Navbar'
 import { Avatar, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
-import { Contact, Mail, Pen, FileText } from 'lucide-react'
+import { Contact, Mail, Pen, FileText, GraduationCap } from 'lucide-react'
 import { Badge } from './ui/badge'
 import { Label } from './ui/label'
 import AppliedJobTable from './AppliedJobTable'
 import UpdateProfileDialog from './UpdateProfileDialog'
 import { useSelector } from 'react-redux'
 import useGetAppliedJobs from '@/hooks/useGetAppliedJobs'
+import { useNavigate } from 'react-router-dom'
 
 // const skills = ["Html", "Css", "Javascript", "Reactjs"]
 const isResume = true;
@@ -17,6 +18,7 @@ const Profile = () => {
     useGetAppliedJobs();
     const [open, setOpen] = useState(false);
     const {user} = useSelector(store=>store.auth);
+    const navigate = useNavigate();
 
     const handleResumeBuilder = () => {
         window.open('http://localhost:3000', '_blank');
@@ -62,13 +64,22 @@ const Profile = () => {
                         {
                             isResume ? <a target='blank' href={user?.profile?.resume} className='text-blue-500 w-full hover:underline cursor-pointer'>{user?.profile?.resumeOriginalName}</a> : <span>NA</span>
                         }
-                        <Button 
-                            onClick={handleResumeBuilder}
-                            className="w-full bg-green-600 hover:bg-green-700 text-white"
-                        >
-                            <FileText className="mr-2 h-4 w-4" />
-                            Create/Edit Resume
-                        </Button>
+                        <div className="grid grid-cols-2 gap-2">
+                            <Button 
+                                onClick={handleResumeBuilder}
+                                className="w-full bg-green-600 hover:bg-green-700 text-white"
+                            >
+                                <FileText className="mr-2 h-4 w-4" />
+                                Create/Edit Resume
+                            </Button>
+                            <Button 
+                                onClick={() => navigate('/learning')}
+                                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                            >
+                                <GraduationCap className="mr-2 h-4 w-4" />
+                                Learning Section
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>
