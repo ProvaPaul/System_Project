@@ -1,0 +1,18 @@
+PS E:\myprojects\System_Project> git init
+
+PS E:\myprojects\System_Project> git remote add origin https://github.com/ProvaPaul/System_Project.git
+>> 
+PS E:\myprojects\System_Project> git checkout main    
+           
+ git pull origin main           
+
+PS E:\myprojects\System_Project> git checkout -b 2007105
+
+PS E:\myprojects\System_Project> git add .
+
+PS E:\myprojects\System_Project> git commit -m "Added ai mock interview"
+
+PS E:\myprojects\System_Project> git push -u origin 2007105
+
+
+
