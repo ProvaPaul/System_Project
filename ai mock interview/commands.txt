@@ -1,0 +1,4 @@
+PS E:\myprojects\System_Project\Ai-mock-Interview> npm install
+
+
+PS E:\myprojects\System_Project\Ai-mock-Interview> npm run dev
