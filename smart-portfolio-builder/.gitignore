@@ -1,0 +1,48 @@
+# === Project specific ===
+resume/clf.pkl
+resume1/jobs_dataset_with_features.csv
+resume1/Resume.csv
+summarizer/saved_summary_model/model.safetensors
+
+# === Node.js / React ===
+node_modules/
+build/
+dist/
+dist-ssr/
+*.local
+
+*.env
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+*.tgz
+
+# === Python ===
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.env
+
+# === OS-specific ===
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# === Editor directories and files ===
+.vscode/
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# === Test / coverage ===
+coverage/
+logs
