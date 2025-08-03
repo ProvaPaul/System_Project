@@ -1,0 +1,221 @@
+/* Base & background */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f7fa; /* soft cool gray-blue */
+  color: #3a3a3a; /* dark but gentle text */
+}
+
+.App {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 20px 40px;
+}
+
+/* Header & profile */
+header {
+  background: #ffffff; /* clean white */
+  padding: 30px 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(58, 58, 58, 0.08);
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.header-img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 6px 20px rgba(120, 120, 120, 0.15);
+  margin-bottom: 18px;
+  border: 2px solid #d8d8d8;
+}
+
+header h1 {
+  margin: 0 0 10px;
+  font-weight: 700;
+  font-size: 2.8rem;
+  color: #1e2a38; /* deep charcoal */
+}
+
+/* Social links container */
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin: 18px 0 28px;
+}
+
+/* Social buttons */
+.social-links button {
+  background: #e1e8f0; /* soft light blue-gray */
+  border: none;
+  border-radius: 32px;
+  padding: 12px 28px;
+  color: #3a4750; /* muted dark slate */
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: 0 4px 14px rgba(58, 58, 58, 0.06);
+}
+
+.social-links button:hover {
+  background-color: #7c90a0; /* medium slate blue */
+  color: #f5f7fa; /* light text on hover */
+  box-shadow: 0 6px 20px rgba(124, 144, 160, 0.4);
+}
+
+.social-links button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124, 144, 160, 0.6);
+}
+
+/* Edit button */
+button#edit-btn {
+  display: block;
+  margin: 0 auto 24px;
+  background: #a98274; /* warm muted brown */
+  padding: 14px 36px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 56px;
+  box-shadow: 0 6px 18px rgba(169, 130, 116, 0.4);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  border: none;
+  color: #f7f4f1;
+}
+
+button#edit-btn:hover {
+  background-color: #855f4f; /* darker warm brown */
+  box-shadow: 0 8px 22px rgba(133, 95, 79, 0.6);
+}
+
+/* Sections */
+section {
+  background: #ffffff;
+  padding: 28px 32px;
+  border-radius: 16px;
+  box-shadow: 0 6px 22px rgba(58, 58, 58, 0.06);
+  margin-bottom: 32px;
+}
+
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 18px;
+  color: #5c677d; /* muted navy */
+
+  padding-bottom: 8px;
+}
+
+/* Skills and projects lists */
+.skills-list,
+.projects-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+}
+
+/* Skill/project cards */
+.card {
+  background: #f8f9fa; /* light neutral */
+  border-radius: 16px;
+  padding: 18px 30px;
+  min-width: 130px;
+  box-shadow: 0 2px 12px rgba(58, 58, 58, 0.08);
+  font-weight: 600;
+  color: #566270; /* slate gray */
+  text-align: center;
+  transition: background-color 0.25s ease;
+  cursor: default;
+}
+
+.card:hover {
+  background-color: #e1e8f0;
+}
+
+.form-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #ffffff;
+  padding: 28px 32px;
+  border-radius: 16px;
+  box-shadow: 0 6px 22px rgba(58, 58, 58, 0.06);
+  max-width: 700px;
+  margin: auto;
+}
+
+.form-page input,
+.form-page textarea {
+  padding: 14px 18px;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 1.8px solid #d8d8d8;
+  color: #3a3a3a;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: border-color 0.3s ease;
+}
+
+.form-page input:focus,
+.form-page textarea:focus {
+  outline: none;
+  border-color: #7c90a0;
+  box-shadow: 0 0 8px rgba(124, 144, 160, 0.3);
+}
+
+.form-page textarea {
+  resize: vertical;
+  min-height: 90px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.form-page label {
+  font-weight: 600;
+  color: #566270;
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+/* Submit & cancel buttons (already shared but repeated for clarity) */
+.form-page button[type="submit"] {
+  background: #7c90a0;
+  color: #f5f7fa;
+  font-weight: 700;
+  border-radius: 56px;
+  padding: 14px 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 6px 18px rgba(124, 144, 160, 0.4);
+  transition: background-color 0.3s ease;
+  margin-top: 12px;
+}
+
+.form-page button[type="submit"]:hover {
+  background-color: #5a6a78;
+  box-shadow: 0 8px 22px rgba(90, 106, 120, 0.6);
+}
+
+.form-page button#cancel-btn {
+  background: #a98274;
+  margin-top: 20px;
+  padding: 12px 32px;
+  border-radius: 56px;
+  font-weight: 600;
+  color: #f7f4f1;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(169, 130, 116, 0.4);
+  transition: background-color 0.3s ease;
+}
+
+.form-page button#cancel-btn:hover {
+  background-color: #855f4f;
+  box-shadow: 0 8px 22px rgba(133, 95, 79, 0.6);
+}
