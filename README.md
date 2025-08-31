@@ -28,7 +28,7 @@ A comprehensive AI-powered job portal for recruiters and students.
 ---
 
 ## Demo / Screenshots
-![Project Screenshot](https://your-image-link.com/screenshot.png)  
+![Project Screenshot](./home.png)  
 [Watch the demo video](https://your-video-link.com)
 
 ---
