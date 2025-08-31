@@ -12,14 +12,15 @@ A comprehensive AI-powered job portal for recruiters and students.
 - Accept/reject applicants
 
 ### Student / Job Seeker
-- Build & customize resumes and portfolios
+- Build & customize resumes
+- Build smart portfolio *(Partner’s Work)*
 - Browse & apply for jobs with summarized descriptions
 - AI Chatbot for guidance
 - AI Voice Assistant for interview practice
 - Take quizzes to test skills
 - Career Roadmap *(Partner’s Work)*
 - Mock Interviews *(Partner’s Work)*
-- Backend API: Node.js, Express, MongoDB
+- Backend API: Node.js, Express, MongoDB *(Partner’s Work)*
 - Frontend UI: React, Redux, Vite, Material-UI
 - Resume Screening & Analysis: ML models, TF-IDF, Random Forest
 - Text Summarization: FastAPI + Transformers
@@ -47,5 +48,20 @@ A comprehensive AI-powered job portal for recruiters and students.
 
 ---
 
+## Getting Started
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/your-repo.git
+2. Install dependencies for each module (frontend, backend, AI services) according to their README instructions.
+3. Run the backend server and frontend application.
+4. Explore the platform as a recruiter or student to experience all features.
+
+---
+
 ## License
-[MIT](LICENSE)
+
+This project is licensed under the **MIT License**.  
+
+See the [LICENSE](./LICENSE) file for more details.
+
