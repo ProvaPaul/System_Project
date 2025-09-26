@@ -20,7 +20,7 @@ A comprehensive AI-powered job portal for recruiters and students.
 - Take quizzes to test skills
 - Career Roadmap *(Partner’s Work)*
 - Mock Interviews *(Partner’s Work)*
-- Backend API: Node.js, Express, MongoDB *(Partner’s Work)*
+- Backend API: Node.js, Express, MongoDB 
 - Frontend UI: React, Redux, Vite, Material-UI
 - Resume Screening & Analysis: ML models, TF-IDF, Random Forest
 - Text Summarization: FastAPI + Transformers
@@ -30,7 +30,7 @@ A comprehensive AI-powered job portal for recruiters and students.
 
 ## Demo / Screenshots
 ![Project Screenshot](./home.png)  
-[Watch the demo video](https://your-video-link.com)
+[Watch the demo video](https://www.youtube.com/watch?v=gGmjPorNmLA)
 
 ---
 
