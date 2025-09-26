@@ -52,7 +52,7 @@ A comprehensive AI-powered job portal for recruiters and students.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/your-repo.git
+   https://github.com/ProvaPaul/System_Project.git
 2. Install dependencies for each module (frontend, backend, AI services) according to their README instructions.
 3. Run the backend server and frontend application.
 4. Explore the platform as a recruiter or student to experience all features.
