@@ -4,6 +4,12 @@ A comprehensive AI-powered job portal for recruiters and students.
 
 ---
 
+## 🎥 Demo Video
+
+Watch the project demo here:  
+https://youtu.be/gGmjPorNmLA?si=vBV20bnjMctgbJ5q
+
+---
 ## Features
 
 ### Recruiter
